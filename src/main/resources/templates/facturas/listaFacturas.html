@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="plantilla/plantilla :: head">
+</head>
+<body>
+	<header th:replace="plantilla/plantilla :: header"> </header>
+	<div class="container">
+		<h1 class="text-secondary border border-success border-top-0">Lista
+			Facturas de [[${cliente.nombreClientes}]] [[${cliente.apellidoClientes}]]
+			con ID: [[${cliente.idClientes}]]</h1>
+		<br />
+		<div class="row">
+			<div class="col-12">
+				<a class="btn btn-info" th:href="@{/insertarFactura/}+${cliente.idClientes}">
+				Agregar Factura</a>
+			</div>
+		</div>
+		<br />
+		<h2 th:if="${facturas.isEmpty}">No cuenta con Facturas</h2>
+		<table th:if="${!facturas.isEmpty}"
+			class="table table-striped table-bordered table-responsive">
+			<thead>
+				<tr>
+					<th scope="col">ID Factura</th>
+					<th scope="col">ID Cliente</th>
+					<th scope="col">Referencia</th>
+					<th scope="col">Fecha</th>
+					<th scope="col">Productos</th>
+					<th scope="col">Opciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="ft : ${facturas}">
+					<td th:text="${ft.idFacturas}"></td>
+					<td th:text="${ft.idClientes.idClientes}"></td>
+					<td th:text="${ft.referenciaFacturas}"></td>
+					<td th:text="${#dates.format(ft.fechaFacturas, 'dd-MM-yyyy')}"></td>
+					<td><a class="btn btn-primary"
+						th:href="@{/listaFacturas/}+${ft.idClientes.idClientes}">Productos</a></td>
+					<td>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button"
+								id="dropdownMenu2" data-bs-toggle="dropdown"
+								aria-expanded="false">Opciones</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+								<li><a class="dropdown-item"
+								th:href="@{/modificarFactura/}+${ft.idFacturas}">Editar</a></li>
+								<li><a class="dropdown-item"
+								th:href="@{/formFactEliminar/}+${ft.idFacturas}">Eliminar</a></li>	
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<footer th:replace="plantilla/plantilla :: footer"></footer>
+</body>
+</html>

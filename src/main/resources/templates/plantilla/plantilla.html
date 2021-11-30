@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+	<meta charset="UTF-8">
+	<title>[[${titulo}]]</title>
+	<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet">
+</head>
+<body>
+	<header th:fragment="header">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/}">FES ARAGÓN</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Clientes</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" th:href="@{/listaclientes}">Lista</a></li>
+								<li><a class="dropdown-item" th:href="@{/listaclientesInsertar}">Crear</a></li>
+								<li><a class="dropdown-item" th:href="@{/listaclientesmodificar}">Modificar</a></li>
+								<li><a class="dropdown-item" th:href="@{/listaclienteseliminar}">Eliminar</a></li>
+							</ul>
+						</li>
+						<li><a class="nav-item nav-link" th:href="@{/facturasClientes}">Facturas</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+	
+	</div>
+	<footer th:fragment="footer">
+		<br/>
+		<div style="text-align:center">
+			<img th:src="@{/imagen/aragon3.gif}" style="width:60%; height:4em;"/>
+		</div>
+		<p>
+		Temas Especiales de Programación con Spring
+		</p>	
+		<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/pages/js/validation.js}"></script> 
+		
+	</footer>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/plantilla/plantilla :: head">
+</head>
+<body>
+	<header th:replace="/plantilla/plantilla :: header"> </header>
+	<div class="container">
+		<div class="row ">
+			<h1 th:text="${titulo}"></h1>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<form th:action="@{/formInsertar}" th:object="${cliente}"
+					method="post" class="container">
+					<table class="table">
+						<tr>
+							<td>Nombre:</td>
+							<td class="px-3">
+								<input type="text" th:field="*{nombreClientes}" class="form-control"
+										th:errorclass="'form-control alert-danger'"/>
+								
+							</td>
+							<td>
+							<small class="form-text text-danger" 
+					th:if="${#fields.hasErrors('nombreClientes')}" th:errors="*{nombreClientes}">
+							</small></td>
+							
+						</tr>
+						<tr>
+							<td>Apellido:</td>
+							<td class="px-3">
+								<input type="text" th:field="*{apellidoClientes}" class="form-control"
+									th:errorclass="'form-control alert-danger'"/>
+									
+							</td>
+							<td>
+								<small class="form-text text-danger" 
+						th:if="${#fields.hasErrors('apellidoClientes')}" th:errors="*{apellidoClientes}">
+								</small>
+							</td>
+						</tr>
+					</table>
+					<div class="row">
+						<input type="submit" class="btn btn-primary mt-3" />
+					</div>
+						
+					<input type="hidden" th:field="*{idClientes}" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="/plantilla/plantilla :: footer"></footer>
+</body>
+</html>

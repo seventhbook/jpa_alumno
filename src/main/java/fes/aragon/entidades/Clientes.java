@@ -1,8 +1,11 @@
 package fes.aragon.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,11 +16,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="clientes")
 @NamedQueries({
-	@NamedQuery(name="cliente.todos",query = "SELECT u FROM Clientes u")
+	@NamedQuery(name="cliente.todos",query="SELECT u FROM Clientes u"),
+	@NamedQuery(name="cliente.datos",query="SELECT u FROM Clientes u WHERE u.idClientes=:id")
 })
 public class Clientes implements Serializable{
 
@@ -26,43 +32,47 @@ public class Clientes implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_clientes")
-	private int idCliente;
+	private int idClientes;
 	
+	@NotEmpty(message = "El nombre no debe ser vacio")
+	@Size(min = 3,max = 15)
 	@Column(name="nombre_clientes")
-	private String nombreCliente;
+	private String nombreClientes;
 	
+	@NotEmpty(message = "El nombre no debe ser vacio")
+	@Size(min = 3,max = 15)
 	@Column(name="apellido_clientes")
-	private String apellidoCliente;
+	private String apellidoClientes;
 	
-	@OneToMany(mappedBy="idClientes",fetch=FetchType.EAGER)
-	private List<Facturas> facturasList;
+	@OneToMany(mappedBy = "idClientes",fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Facturas> facturasList=new ArrayList<>();
 
 	public Clientes() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public int getIdCliente() {
-		return idCliente;
+	public int getIdClientes() {
+		return idClientes;
 	}
 
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
+	public void setIdClientes(int idCliente) {
+		this.idClientes = idCliente;
 	}
 
-	public String getNombreCliente() {
-		return nombreCliente;
+	public String getNombreClientes() {
+		return nombreClientes;
 	}
 
-	public void setNombreCliente(String nombreCliente) {
-		this.nombreCliente = nombreCliente;
+	public void setNombreClientes(String nombreCliente) {
+		this.nombreClientes = nombreCliente;
 	}
 
-	public String getApellidoCliente() {
-		return apellidoCliente;
+	public String getApellidoClientes() {
+		return apellidoClientes;
 	}
 
-	public void setApellidoCliente(String apellidoCliente) {
-		this.apellidoCliente = apellidoCliente;
+	public void setApellidoClientes(String apellidoCliente) {
+		this.apellidoClientes = apellidoCliente;
 	}
 
 	public List<Facturas> getFacturasList() {
@@ -72,16 +82,14 @@ public class Clientes implements Serializable{
 	public void setFacturasList(List<Facturas> facturas) {
 		this.facturasList = facturas;
 	}
-
+	
+	public void agregarFactura(Facturas factura) {
+		facturasList.add(factura);
+	}
+//Como entidades se implementan hashCode y equals
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((apellidoCliente == null) ? 0 : apellidoCliente.hashCode());
-		result = prime * result + ((facturasList == null) ? 0 : facturasList.hashCode());
-		result = prime * result + idCliente;
-		result = prime * result + ((nombreCliente == null) ? 0 : nombreCliente.hashCode());
-		return result;
+		return Objects.hash(apellidoClientes, facturasList, idClientes, nombreClientes);
 	}
 
 	@Override
@@ -93,27 +101,15 @@ public class Clientes implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Clientes other = (Clientes) obj;
-		if (apellidoCliente == null) {
-			if (other.apellidoCliente != null)
-				return false;
-		} else if (!apellidoCliente.equals(other.apellidoCliente))
-			return false;
-		if (facturasList == null) {
-			if (other.facturasList != null)
-				return false;
-		} else if (!facturasList.equals(other.facturasList))
-			return false;
-		if (idCliente != other.idCliente)
-			return false;
-		if (nombreCliente == null) {
-			if (other.nombreCliente != null)
-				return false;
-		} else if (!nombreCliente.equals(other.nombreCliente))
-			return false;
-		return true;
+		return apellidoClientes == other.apellidoClientes && Objects.equals(facturasList, other.facturasList)
+				&& idClientes == other.idClientes && nombreClientes == other.nombreClientes;
+	}
+
+	@Override
+	public String toString() {
+		return "Clientes [idClientes=" + idClientes + ", nombreClientes=" + nombreClientes + ", apellidoClientes="
+				+ apellidoClientes +"]";
 	}
 	
 	
-	
-
 }
