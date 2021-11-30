@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body style="text-align: center; margin: 0;">
+	<h1>MySQL</h1>
+	<div th:if="${cls.isEmpty()}">No hay Clientes</div>
+	<div style="display:inline-block;">
+		<table th:if="${!cls.isEmpty()}" border=1 style="text-align:justify; width:80vw;">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Cantidad Productos</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cl:${cls}">
+					<td th:text="${cl.idCliente}" />
+					<td th:text="${cl.nombreCliente}" />
+					<td th:text="${cl.apellidoCliente}" />
+					<td>
+						<ul th:each="cant:${cl.facturasList.get(0).facturasProductosList}">
+							<li>
+								<h3 th:text="${cant.cantidadFacturasProductos}" />
+								<ul th:each="pd:${cant.productos}">
+									<li th:text="${'Producto: '+pd.nombreProductos+' Precio: '+pd.precioProductos}" />
+								</ul>
+							</li>
+
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
